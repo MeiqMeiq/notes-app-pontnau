@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Determinar la URL base de la API según el entorno
 const apiBaseUrl = import.meta.env.PROD 
-  ? 'https://notes-app-pontnau.vercel.app/api' 
+  ? '/api' 
   : 'http://localhost:8000';
 
 // Cliente API con configuración base

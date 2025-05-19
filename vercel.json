@@ -5,14 +5,6 @@
   "outputDirectory": "frontend/app-notas-frontend/dist",
   "builds": [
     {
-      "src": "frontend/app-notas-frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist",
-        "buildCommand": "npm run build"
-      }
-    },
-    {
       "src": "backend/app/main.py",
       "use": "@vercel/python"
     }
@@ -20,11 +12,14 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/app/main.py"
+      "dest": "/backend/app/main.py"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/app-notas-frontend/dist/$1"
+      "dest": "/frontend/app-notas-frontend/dist/$1"
     }
   ]
 } 
