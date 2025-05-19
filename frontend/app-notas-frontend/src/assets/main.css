@@ -1,0 +1,109 @@
+:root {
+  --color-background: #FFF8E1; /* Color de fondo principal */
+  --color-text: #5D4037; /* Texto marrón oscuro para contraste */
+  --color-primary: #FFB74D; /* Color principal para elementos destacados */
+  --color-secondary: #FFE0B2; /* Color secundario más suave */
+  --color-accent: #FFA000; /* Color de acento más intenso */
+  --color-border: #FFD180; /* Borde con tono naranja suave */
+  --color-card: #FFF8E1; /* Fondo de tarjetas igual al fondo principal */
+  --color-hover: #FFECB3; /* Color para efectos hover */
+  --color-active: #FF9800; /* Color activo más intenso */
+  --color-archived: #FFF3E0; /* Color para notas archivadas */
+  --color-archived-border: #FFE0B2; /* Borde para notas archivadas */
+  --color-button-text: #ffffff; /* Texto de botones */
+  --color-danger: #FF8A65; /* Rojo suavizado para acciones peligrosas */
+  --color-shadow: rgba(0, 0, 0, 0.1); /* Color para sombras */
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+#app {
+  margin: 0 auto;
+  font-weight: normal;
+}
+
+/* Estilos para formularios */
+input, textarea, select, button {
+  font-family: inherit;
+}
+
+/* Enlaces */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-active);
+}
+
+/* Contenedores */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  padding-bottom: 15rem;
+}
+
+/* Estilos de botones */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-button-text);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-active);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-hover);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: var(--color-button-text);
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #FF5722;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+/* Tarjetas */
+.card {
+  background-color: var(--color-card);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
