@@ -15,4 +15,12 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  build: {
+    // Genera un archivo index.html en raíz del directorio de distribución
+    outDir: 'dist',
+    // Asegura que los assets se referencien correctamente
+    assetsDir: 'assets',
+    // Mejora el manejo de rutas para history mode
+    emptyOutDir: true,
+  }
 })
