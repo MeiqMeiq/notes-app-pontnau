@@ -1,12 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend/app-notas-frontend && npm install && npm run build",
-  "installCommand": "echo Skipping root install",
-  "outputDirectory": "frontend/app-notas-frontend/dist",
   "builds": [
     {
       "src": "backend/app/main.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "frontend/app-notas-frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
@@ -19,7 +23,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/app-notas-frontend/dist/$1"
+      "dest": "/frontend/app-notas-frontend/index.html"
     }
   ]
 } 

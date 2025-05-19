@@ -20,7 +20,15 @@ export default defineConfig({
     outDir: 'dist',
     // Asegura que los assets se referencien correctamente
     assetsDir: 'assets',
+    // Genera sourcemaps para depuración
+    sourcemap: true,
     // Mejora el manejo de rutas para history mode
     emptyOutDir: true,
-  }
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
+  },
+  base: '/'
 })

@@ -1,0 +1,7 @@
+.git
+frontend/app-notas-frontend/node_modules
+frontend/app-notas-frontend/.vscode
+backend/venv
+**/__pycache__
+**/.pytest_cache
+backend/notes.db 
