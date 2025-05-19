@@ -30,12 +30,12 @@ call venv\Scripts\activate.bat
 
 REM Instalar dependencias
 echo Instalando dependencias de Python...
-pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings alembic psycopg2-binary python-dotenv
+pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings alembic python-dotenv
 
 REM Configurar base de datos
 if not exist .env (
     echo Creando archivo .env...
-    echo DATABASE_URL=postgresql://postgres:postgres@localhost:5432/notes_db > .env
+    echo DATABASE_URL=sqlite:///./notes.db > .env
 )
 
 REM Limpiar caché de Alembic

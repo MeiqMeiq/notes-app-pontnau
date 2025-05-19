@@ -1,8 +1,13 @@
 import axios from 'axios';
 
+// Determinar la URL base de la API según el entorno
+const apiBaseUrl = import.meta.env.PROD 
+  ? 'https://notes-app-pontnau.vercel.app/api' 
+  : 'http://localhost:8000';
+
 // Cliente API con configuración base
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: apiBaseUrl,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'

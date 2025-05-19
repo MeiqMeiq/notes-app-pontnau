@@ -8,7 +8,7 @@ load_dotenv()
 
 class Settings(BaseSettings):
     # Configuración de la base de datos
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/notes_db")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./notes.db")
     
     # Configuración del API
     API_HOST: str = os.getenv("API_HOST", "0.0.0.0")
@@ -19,7 +19,11 @@ class Settings(BaseSettings):
     SECRET_KEY: str = os.getenv("SECRET_KEY", "default_secret_key")
     
     # Configuración de CORS
-    CORS_ORIGINS_LIST: List[str] = ["http://localhost:5173", "http://localhost:8080"]
+    CORS_ORIGINS_LIST: List[str] = [
+        "http://localhost:5173", 
+        "http://localhost:8080",
+        "https://notes-app-pontnau.vercel.app"
+    ]
     
     class Config:
         env_file = ".env"

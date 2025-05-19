@@ -10,8 +10,7 @@ Una aplicación simple para crear, editar, archivar y eliminar notas.
 - SQLAlchemy (v2.0.41)
 - Alembic (v1.15.2)
 - Uvicorn (v0.34.2)
-- Psycopg2-binary (v2.9.10)
-- PostgreSQL
+- SQLite
 
 ### Frontend
 - Vue.js 3
@@ -34,13 +33,13 @@ Una aplicación simple para crear, editar, archivar y eliminar notas.
 cd backend
 python -m venv venv
 source venv/bin/activate  # En Windows: venv\Scripts\activate
-pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings alembic psycopg2-binary python-dotenv
+pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings alembic python-dotenv
 ```
 
 2. Configurar base de datos:
 ```bash
 # Crear archivo .env con la URL de la base de datos
-echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/notes_db" > .env
+echo "DATABASE_URL=sqlite:///./notes.db" > .env
 ```
 
 3. Ejecutar migraciones:
