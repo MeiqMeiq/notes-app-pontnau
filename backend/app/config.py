@@ -28,6 +28,12 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+        
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Asegurar que la URL de la base de datos use postgresql como dialecto en lugar de postgres
+        if self.DATABASE_URL and self.DATABASE_URL.startswith("postgres:"):
+            self.DATABASE_URL = self.DATABASE_URL.replace("postgres:", "postgresql:", 1)
 
 # Crear instancia de configuración
 settings = Settings() 

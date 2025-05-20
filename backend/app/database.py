@@ -2,8 +2,26 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from .config import settings
+import logging
 
-engine = create_engine(settings.DATABASE_URL)
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+try:
+    # Crear el engine con un timeout para evitar bloqueos
+    engine = create_engine(
+        settings.DATABASE_URL, 
+        pool_pre_ping=True,
+        connect_args={"connect_timeout": 15}
+    )
+    logger.info(f"Conexión a la base de datos establecida con URL: {settings.DATABASE_URL.split('@')[0]}@...")
+except Exception as e:
+    logger.error(f"Error al crear el engine de base de datos: {str(e)}")
+    # Crear un engine en memoria como fallback para que la aplicación no falle completamente
+    engine = create_engine("sqlite:///:memory:")
+    logger.warning("Usando base de datos SQLite en memoria como fallback")
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -17,4 +35,8 @@ def get_db():
 
 # Función para crear todas las tablas en la base de datos
 def create_tables():
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+        logger.info("Tablas creadas exitosamente en la base de datos")
+    except Exception as e:
+        logger.error(f"Error al crear tablas en la base de datos: {str(e)}")
