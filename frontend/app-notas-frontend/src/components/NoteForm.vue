@@ -86,7 +86,7 @@ export default {
       form: {
         title: this.note.title || '',
         content: this.note.content || '',
-        tags: this.note.tags ? [...this.note.tags] : []
+        tags: this.processTagsFromProps(this.note.tags)
       },
       tagInput: ''
     }
@@ -95,10 +95,15 @@ export default {
     note(newNote) {
       this.form.title = newNote.title || '';
       this.form.content = newNote.content || '';
-      this.form.tags = newNote.tags ? [...newNote.tags] : [];
+      this.form.tags = this.processTagsFromProps(newNote.tags);
     }
   },
   methods: {
+    // Procesa tags para convertirlos a strings simples si son objetos
+    processTagsFromProps(tags) {
+      if (!tags) return [];
+      return tags.map(tag => typeof tag === 'object' && tag.name ? tag.name : tag);
+    },
     addTag() {
       const tag = this.tagInput.trim();
       if (tag && !this.form.tags.includes(tag)) {

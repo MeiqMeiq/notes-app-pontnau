@@ -66,6 +66,6 @@ export default {
   removeTagFromNote: (noteId, tagName) => {
     // Este endpoint debería implementarse en el backend para eliminar una etiqueta específica de una nota
     // Si no existe, podríamos buscar la nota, modificar sus etiquetas y usar el endpoint de actualización
-    return apiClient.put(`/notes/${noteId}/remove-tag`, { tag_name: tagName });
+    return apiClient.put(`/api/notes/${noteId}/remove-tag`, { tag_name: tagName });
   }
 };  

@@ -198,18 +198,30 @@ export default {
     async handleSubmit(note) {
       try {
         if (this.isEditing) {
-          await this.notesStore.updateNote(this.editingNote.id, note)
-          this.cancelEdit()
-          await this.loadTags()
+          await this.notesStore.updateNote(this.editingNote.id, note);
+          this.cancelEdit();
+          
+          // Recargar las notas para asegurarse de tener los datos actualizados
+          await this.loadNotes();
+          await this.loadTags();
         }
       } catch (error) {
-        console.error('Error al guardar la nota:', error)
+        console.error('Error al guardar la nota:', error);
+        alert('Error al guardar la nota: ' + error.message);
       }
     },
 
     startEdit(note) {
-      this.editingNote = { ...note }
-      this.isEditing = true
+      // Crear una copia profunda de la nota
+      const noteCopy = { ...note };
+      
+      // Transformar los tags del formato objeto { name, id } a simples strings
+      if (noteCopy.tags && Array.isArray(noteCopy.tags)) {
+        noteCopy.tags = noteCopy.tags.map(tag => typeof tag === 'object' ? tag.name : tag);
+      }
+      
+      this.editingNote = noteCopy;
+      this.isEditing = true;
     },
 
     cancelEdit() {
