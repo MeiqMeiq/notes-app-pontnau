@@ -13,7 +13,7 @@
       <div class="notes-grid">
         <NoteItem
           v-for="note in notes"
-          :key="note.id"
+          :key="noteKey(note)"
           :note="note"
           @edit="$emit('edit', note)"
           @archive="$emit('archive', $event)"
@@ -30,6 +30,7 @@
 
 <script>
 import NoteItem from './NoteItem.vue';
+import { generateKey } from '../utils/helpers';
 
 export default {
   name: 'NoteList',
@@ -50,7 +51,20 @@ export default {
       default: 'No hay notas disponibles'
     }
   },
-  emits: ['edit', 'archive', 'unarchive', 'delete', 'pin', 'unpin', 'filter-by-tag']
+  emits: ['edit', 'archive', 'unarchive', 'delete', 'pin', 'unpin', 'filter-by-tag'],
+  created() {
+    // Generar función para claves únicas optimizadas para renderizado
+    this.noteKey = generateKey(this.notes);
+  },
+  watch: {
+    // Regenerar la función de claves cuando cambian las notas
+    notes: {
+      handler(newNotes) {
+        this.noteKey = generateKey(newNotes);
+      },
+      deep: false // No necesitamos observación profunda
+    }
+  }
 }
 </script>
 
@@ -90,6 +104,8 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   gap: 4.4rem;
   margin-bottom: 2rem;
+  will-change: transform; /* Mejora rendimiento en transformaciones */
+  contain: content; /* Mejora de rendimiento en layout */
 }
 
 @media (max-width: 768px) {
@@ -110,15 +126,16 @@ export default {
   font-weight: 500;
 }
 
-/* Animaciones para la lista de notas */
+/* Animaciones para la lista de notas - optimizadas */
 .note-list-enter-active,
 .note-list-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.3s ease-out;
+  will-change: opacity, transform;
 }
 
 .note-list-enter-from,
 .note-list-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
 }
 </style> 

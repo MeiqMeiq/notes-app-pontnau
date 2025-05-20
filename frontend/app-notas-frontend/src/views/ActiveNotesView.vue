@@ -112,6 +112,7 @@ import { useNotesStore } from '../stores/notes'
 import NoteForm from '../components/NoteForm.vue'
 import NoteList from '../components/NoteList.vue'
 import noteService from '../services/noteService'
+import { debounce } from '../utils/helpers'
 
 export default {
   name: 'ActiveNotesView',
@@ -135,6 +136,9 @@ export default {
       tagInput: '',
       allTags: [],
       selectedTag: null,
+      // Controlar la actualización de UI para mejorar rendimiento
+      needsTagsRefresh: false,
+      isProcessingOperation: false,
     }
   },
   computed: {
@@ -147,12 +151,29 @@ export default {
   },
   created() {
     this.notesStore = useNotesStore()
+    
+    // Configurar función para debounce
+    this.debouncedLoadTags = debounce(this.loadTags, 500)
+    
     this.loadNotes()
     this.loadTags()
   },
   methods: {
     async loadNotes() {
-      await this.notesStore.fetchActiveNotes(this.selectedTag)
+      if (this.isProcessingOperation) return;
+      
+      try {
+        this.isProcessingOperation = true;
+        await this.notesStore.fetchActiveNotes(this.selectedTag)
+      } finally {
+        this.isProcessingOperation = false;
+      }
+      
+      // Verificar si necesitamos actualizar las etiquetas
+      if (this.needsTagsRefresh) {
+        this.debouncedLoadTags();
+        this.needsTagsRefresh = false;
+      }
     },
 
     async loadTags() {
@@ -177,9 +198,10 @@ export default {
     },
 
     async createNote() {
-      if (!this.newNote.title || !this.newNote.content) return
+      if (!this.newNote.title || !this.newNote.content || this.isProcessingOperation) return
       
       try {
+        this.isProcessingOperation = true;
         await this.notesStore.createNote({ ...this.newNote })
         
         // Limpiar el formulario
@@ -187,31 +209,41 @@ export default {
         this.newNote.content = ''
         this.newNote.tags = []
         
-        await this.loadNotes()
-        await this.loadTags()
+        // Marcar para refrescar etiquetas en lugar de hacerlo inmediatamente
+        this.needsTagsRefresh = true;
       } catch (error) {
         console.error('Error al crear la nota:', error)
         alert('No se pudo crear la nota. Por favor, intenta de nuevo.')
+      } finally {
+        this.isProcessingOperation = false;
       }
     },
 
     async handleSubmit(note) {
+      if (this.isProcessingOperation) return;
+      
       try {
+        this.isProcessingOperation = true;
+        
         if (this.isEditing) {
           await this.notesStore.updateNote(this.editingNote.id, note);
           this.cancelEdit();
           
-          // Recargar las notas para asegurarse de tener los datos actualizados
-          await this.loadNotes();
-          await this.loadTags();
+          // Marcar para refrescar etiquetas en lugar de hacerlo inmediatamente
+          this.needsTagsRefresh = true;
         }
       } catch (error) {
         console.error('Error al guardar la nota:', error);
         alert('Error al guardar la nota: ' + error.message);
+      } finally {
+        this.isProcessingOperation = false;
       }
     },
 
     startEdit(note) {
+      // Evitar múltiples ediciones simultáneas
+      if (this.isEditing || this.isProcessingOperation) return;
+      
       // Crear una copia profunda de la nota
       const noteCopy = { ...note };
       
@@ -230,46 +262,68 @@ export default {
     },
 
     async archiveNote(noteId) {
+      if (this.isProcessingOperation) return;
+      
       try {
+        this.isProcessingOperation = true;
         await this.notesStore.archiveNote(noteId)
       } catch (error) {
         console.error('Error al archivar la nota:', error)
+      } finally {
+        this.isProcessingOperation = false;
       }
     },
 
     async deleteNote(noteId) {
-      if (!noteId) return
+      if (!noteId || this.isProcessingOperation) return
       
       try {
+        this.isProcessingOperation = true;
         await this.notesStore.deleteNote(noteId)
       } catch (error) {
         console.error('Error al eliminar la nota:', error)
         alert('Error al eliminar la nota: ' + error.message)
+      } finally {
+        this.isProcessingOperation = false;
       }
     },
 
     async pinNote(noteId) {
+      if (this.isProcessingOperation) return;
+      
       try {
+        this.isProcessingOperation = true;
         await this.notesStore.pinNote(noteId)
       } catch (error) {
         console.error('Error al fijar la nota:', error)
+      } finally {
+        this.isProcessingOperation = false;
       }
     },
 
     async unpinNote(noteId) {
+      if (this.isProcessingOperation) return;
+      
       try {
+        this.isProcessingOperation = true;
         await this.notesStore.unpinNote(noteId)
       } catch (error) {
         console.error('Error al desfijar la nota:', error)
+      } finally {
+        this.isProcessingOperation = false;
       }
     },
 
     async filterByTag(tagName) {
+      if (this.isProcessingOperation || this.selectedTag === tagName) return;
+      
       this.selectedTag = tagName
       await this.loadNotes()
     },
 
     async clearTagFilter() {
+      if (this.isProcessingOperation || !this.selectedTag) return;
+      
       this.selectedTag = null
       // Forzar recarga completa ignorando caché
       this.notesStore.lastUpdated = null
@@ -277,9 +331,12 @@ export default {
     },
 
     async deleteTag(tagId) {
+      if (this.isProcessingOperation) return;
+      
       if (confirm('¿Estás seguro de que deseas eliminar esta etiqueta?')) {
         try {
           // Deshabilitar la interacción durante la operación
+          this.isProcessingOperation = true;
           const button = event.target;
           button.disabled = true;
           button.innerHTML = '×';
@@ -299,6 +356,7 @@ export default {
           console.error('Error al eliminar la etiqueta:', error);
           alert('No se pudo eliminar la etiqueta. Por favor, intenta de nuevo.');
         } finally {
+          this.isProcessingOperation = false;
           if (event && event.target) {
             event.target.disabled = false;
           }

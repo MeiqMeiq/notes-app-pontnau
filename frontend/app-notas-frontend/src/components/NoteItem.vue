@@ -27,7 +27,7 @@
       </div>
       
       <p class="note-date">
-        <small>Actualizado: {{ formatDate(note.updated_at) }}</small>
+        <small>Actualizado: {{ formattedDate }}</small>
       </p>
     </div>
     
@@ -127,6 +127,11 @@ export default {
     return {
       isTogglingPin: false
     };
+  },
+  computed: {
+    formattedDate() {
+      return this.formatDate(this.note.updated_at);
+    }
   }
 }
 </script>
