@@ -6,10 +6,10 @@
       "use": "@vercel/python"
     },
     {
-      "src": "frontend/app-notas-frontend/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "frontend/app-notas-frontend/dist"
       }
     }
   ],

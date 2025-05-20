@@ -5,6 +5,7 @@
   "workspaces": ["frontend/app-notas-frontend"],
   "scripts": {
     "build": "cd frontend/app-notas-frontend && npm install && npm run build",
+    "vercel-build": "cd frontend/app-notas-frontend && npm install && npm run build",
     "dev": "cd frontend/app-notas-frontend && npm run dev"
   }
 } 
