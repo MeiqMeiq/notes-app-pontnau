@@ -9,21 +9,30 @@
       "src": "frontend/app-notas-frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "outputDirectory": "frontend/app-notas-frontend/dist"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/app/main.py"
+      "dest": "backend/app/main.py"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "frontend/app-notas-frontend/dist/assets/$1"
+    },
+    {
+      "src": "/(.*\\.[a-z0-9]{1,10}$)",
+      "dest": "frontend/app-notas-frontend/dist/$1"
     },
     {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/app-notas-frontend/index.html"
+      "dest": "frontend/app-notas-frontend/dist/index.html"
     }
   ]
 } 
