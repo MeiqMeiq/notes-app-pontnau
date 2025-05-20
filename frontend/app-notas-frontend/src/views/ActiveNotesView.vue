@@ -271,6 +271,8 @@ export default {
 
     async clearTagFilter() {
       this.selectedTag = null
+      // Forzar recarga completa ignorando caché
+      this.notesStore.lastUpdated = null
       await this.loadNotes()
     },
 

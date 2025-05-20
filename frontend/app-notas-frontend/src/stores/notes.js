@@ -54,16 +54,17 @@ export const useNotesStore = defineStore('notes', {
 
     // Cargar Notas Actuales
     async fetchActiveNotes(tagName = null) {
-      // Usar caché si es posible y no hay una etiqueta específica
-      if (!tagName && !this.shouldRefresh && this.activeNotes.length > 0) {
-        return this.activeNotes;
+      // Si hay una etiqueta o acabamos de quitar un filtro (forzar recarga)
+      if (tagName || this.shouldRefresh || this.activeNotes.length === 0) {
+        return this.executeAction(async () => {
+          const response = await noteService.getActiveNotes(tagName);
+          this.activeNotes = response.data;
+          return response.data;
+        });
       }
       
-      return this.executeAction(async () => {
-        const response = await noteService.getActiveNotes(tagName);
-        this.activeNotes = response.data;
-        return response.data;
-      });
+      // Usar caché si no hay filtro y tenemos datos
+      return this.activeNotes;
     },
     
     // Cargar notas archivadas

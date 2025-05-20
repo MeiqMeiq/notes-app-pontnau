@@ -68,7 +68,14 @@ export default {
     const url = tag ? `/api/notes?tag=${tag}` : '/api/notes';
     const cacheKey = getCacheKey(url);
     
-    // Verificar caché primero
+    // Para notas sin filtro, siempre obtener datos frescos
+    if (!tag) {
+      const response = await apiClient.get(url);
+      cache.set(cacheKey, response.data);
+      return response;
+    }
+    
+    // Para filtros, verificar caché primero
     const cachedData = cache.get(cacheKey);
     if (cachedData) return { data: cachedData };
     
