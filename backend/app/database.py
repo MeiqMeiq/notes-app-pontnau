@@ -17,4 +17,4 @@ def get_db():
 
 # Función para crear todas las tablas en la base de datos
 def create_tables():
-    Base.metadata.create_all(bind=engine) 
+    Base.metadata.create_all(bind=engine)
