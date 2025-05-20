@@ -23,9 +23,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Incluir routers
-app.include_router(note_router.router)
-app.include_router(tag_router.router)
+# Incluir routers con prefijo /api
+app.include_router(note_router.router, prefix="/api")
+app.include_router(tag_router.router, prefix="/api")
 
 # Ruta de bienvenida
 @app.get("/")
@@ -38,4 +38,16 @@ async def root(request: Request):
         "request_headers": dict(request.headers),
         "cors_origins": settings.CORS_ORIGINS_LIST,
         "environment": env_vars
+    }
+
+# Añadir la misma ruta de bienvenida también en /api para diagnóstico
+@app.get("/api")
+async def api_root(request: Request):
+    return {
+        "message": "API de notas funcionando correctamente",
+        "version": "0.1.0",
+        "endpoints": [
+            {"path": "/api/notes", "description": "Gestión de notas"},
+            {"path": "/api/tags", "description": "Gestión de etiquetas"}
+        ]
     } 

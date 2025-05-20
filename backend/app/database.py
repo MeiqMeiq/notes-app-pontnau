@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from .config import settings
@@ -36,7 +36,12 @@ def get_db():
 # Función para crear todas las tablas en la base de datos
 def create_tables():
     try:
-        Base.metadata.create_all(bind=engine)
-        logger.info("Tablas creadas exitosamente en la base de datos")
+        inspector = inspect(engine)
+        # Solamente creamos tablas si no existen
+        if not inspector.has_table('notes') and not inspector.has_table('tags'):
+            Base.metadata.create_all(bind=engine)
+            logger.info("Tablas creadas exitosamente en la base de datos")
+        else:
+            logger.info("Las tablas ya existen en la base de datos, omitiendo creación")
     except Exception as e:
         logger.error(f"Error al crear tablas en la base de datos: {str(e)}")
