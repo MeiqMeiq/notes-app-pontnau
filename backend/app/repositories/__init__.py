@@ -1,2 +1,2 @@
 # Inicialización de paquete repositories 
-from app.repositories import note_repository, tag_repository 
+from . import note_repository, tag_repository 
