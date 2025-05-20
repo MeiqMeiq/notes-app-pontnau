@@ -68,4 +68,4 @@ export default {
     // Si no existe, podríamos buscar la nota, modificar sus etiquetas y usar el endpoint de actualización
     return apiClient.put(`/notes/${noteId}/remove-tag`, { tag_name: tagName });
   }
-}; 
+};  
