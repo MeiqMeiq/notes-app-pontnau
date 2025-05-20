@@ -19,7 +19,8 @@
           v-for="tag in note.tags" 
           :key="tag.name" 
           class="tag-item"
-          @click="$emit('filter-by-tag', tag.name)"
+          :class="{ 'non-clickable': note.is_archived }"
+          @click="!note.is_archived && $emit('filter-by-tag', tag.name)"
         >
           {{ tag.name }}
         </span>
@@ -220,7 +221,12 @@ export default {
   transition: all 0.2s ease;
 }
 
-.tag-item:hover {
+.tag-item.non-clickable {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.tag-item:not(.non-clickable):hover {
   opacity: 0.85;
   transform: translateY(-2px);
 }

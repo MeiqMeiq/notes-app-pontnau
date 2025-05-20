@@ -6,40 +6,14 @@
     
     <div class="container">
       <div class="notes-container">
-        <h2>Mis Notas Archivadas {{ selectedTag ? `(Etiqueta: ${selectedTag})` : '' }}</h2>
+        <h2>Mis Notas Archivadas</h2>
         <NoteList 
           :notes="notes" 
           :is-loading="isLoading"
           empty-message="No tienes notas archivadas. Las notas que archives aparecerán aquí."
           @unarchive="unarchiveNote"
           @delete="deleteNote"
-          @filter-by-tag="filterByTag"
         />
-        
-        <div class="tags-filter-container" v-if="allTags.length > 0">
-          <div class="tags-header">
-            <h3>Filtrar por Etiqueta</h3>
-            <button v-if="selectedTag" @click="clearTagFilter" class="btn-clear-filter">
-              Limpiar filtro
-            </button>
-          </div>
-          <div class="tags-list">
-            <span 
-              v-for="tag in allTags" 
-              :key="tag.id" 
-              class="tag-filter"
-              :class="{ active: selectedTag === tag.name }"
-            >
-              <span @click="filterByTag(tag.name)">{{ tag.name }}</span>
-              <button 
-                type="button" 
-                class="tag-delete" 
-                @click.stop="deleteTag(tag.id)" 
-                title="Eliminar etiqueta"
-              >×</button>
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -72,20 +46,10 @@ export default {
   created() {
     this.notesStore = useNotesStore();
     this.loadNotes();
-    this.loadTags();
   },
   methods: {
     async loadNotes() {
-      await this.notesStore.fetchArchivedNotes(this.selectedTag);
-    },
-    
-    async loadTags() {
-      try {
-        const response = await noteService.getAllTags();
-        this.allTags = response.data;
-      } catch (error) {
-        console.error('Error al cargar etiquetas:', error);
-      }
+      await this.notesStore.fetchArchivedNotes();
     },
     
     async unarchiveNote(noteId) {
@@ -104,32 +68,6 @@ export default {
       } catch (error) {
         console.error('Error al eliminar la nota:', error);
         alert('Error al eliminar la nota: ' + error.message);
-      }
-    },
-    
-    async filterByTag(tagName) {
-      this.selectedTag = tagName;
-      await this.loadNotes();
-    },
-    
-    async clearTagFilter() {
-      this.selectedTag = null;
-      await this.loadNotes();
-    },
-    
-    async deleteTag(tagId) {
-      if (confirm('¿Estás seguro de que deseas eliminar esta etiqueta?')) {
-        try {
-          await this.notesStore.deleteTag(tagId);
-          await this.loadTags();
-          
-          if (this.selectedTag) {
-            this.clearTagFilter();
-          }
-        } catch (error) {
-          console.error('Error al eliminar la etiqueta:', error);
-          alert('No se pudo eliminar la etiqueta. Por favor, intenta de nuevo.');
-        }
       }
     }
   }
