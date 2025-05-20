@@ -20,19 +20,11 @@
       "dest": "backend/app/main.py"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "frontend/app-notas-frontend/dist/assets/$1"
-    },
-    {
-      "src": "/(.*\\.[a-z0-9]{1,10}$)",
-      "dest": "frontend/app-notas-frontend/dist/$1"
-    },
-    {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/app-notas-frontend/dist/index.html"
+      "dest": "/frontend/app-notas-frontend/index.html"
     }
   ]
 } 
