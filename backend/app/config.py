@@ -8,7 +8,7 @@ load_dotenv()
 
 class Settings(BaseSettings):
     # Configuración de la base de datos
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./notes.db")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://postgres:postresql-pass@localhost:5432/postgres-ensolvers")
     
     # Configuración del API
     API_HOST: str = os.getenv("API_HOST", "0.0.0.0")
