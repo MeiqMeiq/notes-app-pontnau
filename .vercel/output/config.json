@@ -1,0 +1,21 @@
+{
+  "version": 3,
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/app/main.py"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "sqlite:///./backend/notes.db",
+    "ENVIRONMENT": "production",
+    "PYTHONPATH": "/var/task"
+  }
+} 
