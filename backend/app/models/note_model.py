@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Table, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.database import Base
+from ..database import Base
 
 # Tabla de asociación para la relación many-to-many entre Note y Tag
 note_tag = Table('note_tags', Base.metadata,
