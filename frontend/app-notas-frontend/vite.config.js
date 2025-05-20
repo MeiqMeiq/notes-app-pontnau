@@ -16,13 +16,16 @@ export default defineConfig({
     },
   },
   build: {
-    // Optimizar el tamaño del bundle
-    minify: 'terser', 
-    terserOptions: {
-      compress: {
-        drop_console: true,  // Eliminar console.log en producción
-        drop_debugger: true  // Eliminar debugger statements
-      }
+    // Optimizar el tamaño del bundle usando esbuild (incluido con Vite)
+    minify: 'esbuild',
+    // Opciones para esbuild
+    esbuildOptions: {
+      // Optimizaciones de esbuild
+      minifyIdentifiers: true,
+      minifySyntax: true,
+      minifyWhitespace: true,
+      treeShaking: true,
+      legalComments: 'none'
     },
     // Dividir chunks por módulos para mejor caching
     rollupOptions: {
