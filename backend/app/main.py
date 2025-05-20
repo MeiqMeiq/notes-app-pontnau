@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import note_router, tag_router
-from app.config import settings
-from app.database import create_tables
+from .routers import note_router, tag_router
+from .config import settings
+from .database import create_tables
 import os
 
 # Crear todas las tablas en la base de datos

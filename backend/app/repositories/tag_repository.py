@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.note_model import Tag, note_tag
-from app.schemas import note_schema
+from ..models.note_model import Tag, note_tag
+from ..schemas import note_schema
 from typing import List, Optional
 from sqlalchemy import delete
 
