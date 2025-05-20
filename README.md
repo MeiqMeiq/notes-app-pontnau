@@ -7,17 +7,7 @@
 
 ## 📸 Demo
 
-### Active Notes Page
-![demo-active-notes](https://i.imgur.com/0UyNxnx.png)
-
-### Archived Notes Page
-![demo-archived-notes](https://i.imgur.com/2eU2UuJ.png)
-
-### Creating a New Note
-![demo-create-note](https://i.imgur.com/QOE9FBg.png)
-
-### Editing Note with Categories
-![demo-edit-note](https://i.imgur.com/yEmLhOI.png)
+![demo-app-notas](https://github.com/user-attachments/assets/69e893e2-c6b0-4418-851d-fc4506b3f8fa)
 
 ## Description
 
