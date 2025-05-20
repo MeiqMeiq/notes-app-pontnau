@@ -6,30 +6,6 @@ export default {
   components: {
     RouterLink,
     RouterView
-  },
-  data() {
-    return {
-      // Rastrear si el usuario está desplazándose para optimizar renderizado
-      isScrolling: false
-    }
-  },
-  mounted() {
-    // Optimizar el renderizado durante el desplazamiento
-    window.addEventListener('scroll', this.handleScroll, { passive: true });
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-  methods: {
-    handleScroll() {
-      if (!this.isScrolling) {
-        this.isScrolling = true;
-        // Esperar hasta que el desplazamiento se detenga
-        window.requestAnimationFrame(() => {
-          this.isScrolling = false;
-        });
-      }
-    }
   }
 }
 </script>
@@ -86,12 +62,6 @@ export default {
 <style>
 @import './assets/main.css';
 
-/* CSS crítico para mejorar rendimiento */
-body {
-  will-change: scroll-position;
-  overflow-anchor: auto;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -100,8 +70,6 @@ body {
   background-color: var(--color-primary);
   color: var(--color-text);
   box-shadow: 0 2px 8px var(--color-shadow);
-  will-change: transform; /* Optimizar animaciones */
-  contain: layout style; /* Aislamiento de Layout */
 }
 
 .logo {
