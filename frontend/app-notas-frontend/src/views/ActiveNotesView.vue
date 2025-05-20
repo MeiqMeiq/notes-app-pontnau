@@ -277,15 +277,29 @@ export default {
     async deleteTag(tagId) {
       if (confirm('¿Estás seguro de que deseas eliminar esta etiqueta?')) {
         try {
-          await this.notesStore.deleteTag(tagId)
-          await this.loadTags()
+          // Deshabilitar la interacción durante la operación
+          const button = event.target;
+          button.disabled = true;
+          button.innerHTML = '×';
+          
+          await this.notesStore.deleteTag(tagId);
+          
+          // Ya no es necesario recargar todas las notas porque el store las actualiza
+          await this.loadTags();
           
           if (this.selectedTag) {
-            this.clearTagFilter()
+            const tagExists = this.allTags.some(tag => tag.name === this.selectedTag);
+            if (!tagExists) {
+              this.clearTagFilter();
+            }
           }
         } catch (error) {
-          console.error('Error al eliminar la etiqueta:', error)
-          alert('No se pudo eliminar la etiqueta. Por favor, intenta de nuevo.')
+          console.error('Error al eliminar la etiqueta:', error);
+          alert('No se pudo eliminar la etiqueta. Por favor, intenta de nuevo.');
+        } finally {
+          if (event && event.target) {
+            event.target.disabled = false;
+          }
         }
       }
     },

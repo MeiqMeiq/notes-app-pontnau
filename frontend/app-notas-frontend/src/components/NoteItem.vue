@@ -96,12 +96,37 @@ export default {
       }
     },
     togglePin() {
+      if (this.isTogglingPin) return;
+      
+      this.isTogglingPin = true;
+      
+      const pinButton = event.target;
+      
+      if (pinButton) {
+        if (this.note.is_pinned) {
+          pinButton.style.opacity = '0.5';
+          pinButton.style.transform = 'rotate(45deg)';
+        } else {
+          pinButton.style.opacity = '1';
+          pinButton.style.transform = 'rotate(0)';
+        }
+      }
+      
       if (this.note.is_pinned) {
         this.$emit('unpin', this.note.id);
       } else {
         this.$emit('pin', this.note.id);
       }
+      
+      setTimeout(() => {
+        this.isTogglingPin = false;
+      }, 300);
     }
+  },
+  data() {
+    return {
+      isTogglingPin: false
+    };
   }
 }
 </script>

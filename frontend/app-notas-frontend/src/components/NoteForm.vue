@@ -36,7 +36,8 @@
             v-model="tagInput"
             placeholder="Escribe y presiona Enter para agregar etiquetas"
             class="form-control"
-            @keyup.enter="addTag"
+            @keydown.enter.prevent="addTag"
+            ref="tagInputField"
           >
           <div class="tags-list" v-if="form.tags.length > 0">
             <span v-for="(tag, index) in form.tags" :key="index" class="tag-item">
@@ -48,14 +49,15 @@
       </div>
       
       <div class="form-actions">
-        <button type="submit" class="btn btn-primary">
-          {{ isEditing ? 'Actualizar' : 'Crear' }}
+        <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
+          {{ isSubmitting ? 'Procesando...' : (isEditing ? 'Actualizar' : 'Crear') }}
         </button>
         <button 
           v-if="isEditing" 
           type="button" 
           class="btn btn-secondary" 
           @click="$emit('cancel')"
+          :disabled="isSubmitting"
         >
           Cancelar
         </button>
@@ -88,7 +90,8 @@ export default {
         content: this.note.content || '',
         tags: this.processTagsFromProps(this.note.tags)
       },
-      tagInput: ''
+      tagInput: '',
+      isSubmitting: false
     }
   },
   watch: {
@@ -104,26 +107,63 @@ export default {
       if (!tags) return [];
       return tags.map(tag => typeof tag === 'object' && tag.name ? tag.name : tag);
     },
+    
+    // Para añadir una etiqueta al formulario (optimizado)
     addTag() {
       const tag = this.tagInput.trim();
-      if (tag && !this.form.tags.includes(tag)) {
-        this.form.tags.push(tag);
+      if (tag && !this.form.tags.some(t => t.toLowerCase() === tag.toLowerCase())) {
+        // Añadir al inicio del array para mejor visibilidad
+        this.form.tags.unshift(tag);
       }
       this.tagInput = '';
+      
+      // Mantener el foco en el campo para seguir añadiendo etiquetas
+      this.$nextTick(() => {
+        if (this.$refs.tagInputField) {
+          this.$refs.tagInputField.focus();
+        }
+      });
     },
+    
+    // Para eliminar una etiqueta (optimizado)
     removeTag(index) {
+      // Evitar múltiples clics accidentales
+      if (this.isRemoving) return;
+      
+      this.isRemoving = true;
       this.form.tags.splice(index, 1);
+      
+      // Restablecer el estado y enfocar el campo de entrada
+      setTimeout(() => {
+        this.isRemoving = false;
+        if (this.$refs.tagInputField) {
+          this.$refs.tagInputField.focus();
+        }
+      }, 50);
     },
-    submitForm() {
+    
+    // Envío del formulario (optimizado)
+    async submitForm() {
       if (!this.form.title || !this.form.content) return;
       
-      this.$emit('submit', { ...this.form });
+      // Evitar envíos múltiples
+      if (this.isSubmitting) return;
       
-      if (!this.isEditing) {
-        // Limpiar el formulario después de crear
-        this.form.title = '';
-        this.form.content = '';
-        this.form.tags = [];
+      this.isSubmitting = true;
+      
+      try {
+        await this.$emit('submit', { ...this.form });
+        
+        if (!this.isEditing) {
+          // Limpiar el formulario después de crear
+          this.form.title = '';
+          this.form.content = '';
+          this.form.tags = [];
+        }
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+      } finally {
+        this.isSubmitting = false;
       }
     }
   }
@@ -199,5 +239,11 @@ label {
   display: flex;
   gap: 0.75rem;
   margin-top: 1.5rem;
+}
+
+/* Estilo adicional para botón deshabilitado */
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 </style> 
