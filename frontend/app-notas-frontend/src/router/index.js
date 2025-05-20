@@ -3,7 +3,7 @@ import ActiveNotesView from '../views/ActiveNotesView.vue'
 import ArchivedNotesView from '../views/ArchivedNotesView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL || '/'),
+  history: createWebHistory('/'),
   routes: [
     {
       path: '/',

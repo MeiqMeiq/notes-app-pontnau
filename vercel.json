@@ -9,8 +9,7 @@
       "src": "frontend/app-notas-frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist",
-        "outputDirectory": "frontend/app-notas-frontend/dist"
+        "distDir": "dist"
       }
     }
   ],
@@ -24,7 +23,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/app-notas-frontend/index.html"
+      "dest": "/index.html"
     }
   ]
 } 
