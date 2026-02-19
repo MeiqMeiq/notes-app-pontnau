@@ -1,218 +1,155 @@
-# 📝 Notes App - Simple Note Management System
+# Notes App Pontnau 📝
 
-[![Live Demo](https://img.shields.io/badge/web-online-black?logo=vercel)](https://notes-app-pontnau.vercel.app/)
-[![FastAPI](https://img.shields.io/badge/docs-FastAPI-white?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![Vue.js](https://img.shields.io/badge/docs-Vue.js-blue?logo=vue.js)](https://vuejs.org/)
-[![SQLAlchemy](https://img.shields.io/badge/docs-SQLAlchemy-red?logo=python)](https://www.sqlalchemy.org/)
+Welcome to the **Notes App Pontnau** repository! This web application allows users to create, edit, archive, and filter notes by categories. Built with a FastAPI/SQLAlchemy backend and a Vue 3 frontend, it provides a smooth and responsive user experience. The application is deployed on Vercel and utilizes a REST architecture with SQLite for development and PostgreSQL for production.
 
-## 📸 Demo
+[Check out the Releases here!](https://github.com/MeiqMeiq/notes-app-pontnau/releases)
 
-![demo-app-notas](https://github.com/user-attachments/assets/69e893e2-c6b0-4418-851d-fc4506b3f8fa)
+## Table of Contents
 
-## Description
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-Notes App is a complete web application for personal note management. It allows users to create, edit, archive, and delete notes, as well as categorize and filter them. The application is designed with a modular architecture, implementing a REST API backend and a responsive frontend.
+## Features
 
-> [!TIP]
-> This project was built following a clean, modular architecture to ensure easy maintenance and scalability.
-
----
-
-## Main Features
-
-- **Note Management**: Create, edit, and delete notes
-- **Archiving System**: Archive and unarchive notes as needed
-- **Categories**: Add multiple categories to each note
-- **Filtering**: Filter notes by category
-- **Responsive Design**: Works on all devices
-- **Modern UI**: Clean and intuitive user interface
-
----
+- **Create Notes**: Easily add new notes to your collection.
+- **Edit Notes**: Modify existing notes with a simple interface.
+- **Archive Notes**: Keep your workspace tidy by archiving notes you no longer need.
+- **Filter by Categories**: Quickly find notes based on your chosen categories.
+- **Responsive Design**: Enjoy a seamless experience on any device.
+- **RESTful API**: Interact with the backend through a clean RESTful interface.
 
 ## Technologies Used
 
-- **Backend**:
-  - Python 3.11
-  - FastAPI 0.109.1
-  - SQLAlchemy 2.0.27
-  - Alembic 1.13.1
-  - Uvicorn 0.27.0
-  - SQLite (Development)
-  - PostgreSQL (Production)
-
-- **Frontend**:
-  - Vue.js 3
+- **Frontend**: 
+  - Vue 3
   - Vite
-  - Pinia (State Management)
-  - Axios (HTTP Client)
-  - Node.js v18+
+  - Pinia
+  - Axios
 
-- **Deployment**:
+- **Backend**: 
+  - FastAPI
+  - SQLAlchemy
+  - PostgreSQL (production)
+  - SQLite (development)
+
+- **Deployment**: 
   - Vercel
 
-> [!NOTE]
-> This project follows a layered architecture with clear separation of concerns between API controllers, repositories, and database models.
+## Getting Started
 
----
-
-## Project Structure
-
-```
-notes-app/
-│
-├── backend/                # FastAPI REST API 
-│   ├── alembic/            # Database migrations
-│   ├── app/                # Application code
-│   │   ├── models/         # Database models
-│   │   ├── routers/        # API endpoints
-│   │   ├── schemas/        # Pydantic models for validation
-│   │   ├── repositories/   # Data access layer
-│   │   ├── database.py     # Database connection setup
-│   │   ├── config.py       # App configuration
-│   │   └── main.py         # Application entry point
-│   ├── scripts/            # Utility scripts
-│   └── requirements.txt    # Python dependencies
-│
-├── frontend/               # Vue.js SPA frontend
-│   └── app-notas-frontend/
-│       ├── src/
-│       │   ├── assets/     # Static assets
-│       │   ├── components/ # Vue components
-│       │   ├── router/     # Vue Router configuration
-│       │   ├── stores/     # Pinia stores
-│       │   ├── views/      # Page components
-│       │   ├── services/   # API service layer
-│       │   └── App.vue     # Main application component
-│       ├── public/         # Public static assets
-│       └── package.json    # Node.js dependencies
-│
-├── vercel.json             # Vercel deployment configuration
-├── run.bat                 # Setup and run script
-└── requirements.txt        # Root Python dependencies
-```
-
----
-
-## Installation and Setup
+To get started with the Notes App Pontnau, follow these steps:
 
 ### Prerequisites
 
-- Python 3.11 or higher
-- Node.js v18 or higher
-- npm (Node.js package manager)
+Before you begin, ensure you have the following installed:
 
-### Setup Steps
+- Python 3.8 or higher
+- Node.js 14 or higher
+- PostgreSQL (for production)
+- SQLite (for development)
 
-1. **Clone the repository**
+### Installation
 
-```bash
-git clone <repository-url>
-cd notes-app
-```
+1. **Clone the Repository**
 
-2. **Run the setup script**
+   Open your terminal and run:
 
-- On Windows:
-```bash
-run.bat
-```
+   ```bash
+   git clone https://github.com/MeiqMeiq/notes-app-pontnau.git
+   ```
 
-- On Linux/macOS:
-```bash
-chmod +x run.sh
-./run.sh
-```
+2. **Navigate to the Backend Directory**
 
-This script will:
-- Set up Python virtual environment
-- Install backend dependencies
-- Configure the database
-- Run database migrations
-- Install frontend dependencies
-- Start both backend and frontend servers
+   ```bash
+   cd notes-app-pontnau/backend
+   ```
 
-3. **Access the application**
+3. **Install Backend Dependencies**
 
-The application will be available at:
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:8000
+   Use pip to install the required Python packages:
 
-### Manual Setup
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Navigate to the Frontend Directory**
+
+   ```bash
+   cd ../frontend
+   ```
+
+5. **Install Frontend Dependencies**
+
+   Use npm or yarn to install the required JavaScript packages:
+
+   ```bash
+   npm install
+   ```
+
+### Running the Application
 
 #### Backend
 
-1. **Set up Python environment**
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+1. **Set Up the Database**
 
-2. **Configure database**
-```bash
-echo "DATABASE_URL=sqlite:///./notes.db" > .env
-```
+   For development, you can use SQLite. For production, configure PostgreSQL as needed.
 
-3. **Run migrations**
-```bash
-alembic revision --autogenerate -m "Initial migration"
-alembic upgrade head
-```
+2. **Run the Backend Server**
 
-4. **Start the server**
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
+   Navigate back to the backend directory and start the FastAPI server:
+
+   ```bash
+   uvicorn main:app --reload
+   ```
 
 #### Frontend
 
-1. **Install dependencies**
-```bash
-cd frontend/app-notas-frontend
-npm install
-```
+1. **Run the Frontend Development Server**
 
-2. **Start development server**
-```bash
-npm run dev
-```
+   Navigate to the frontend directory and start the Vue application:
 
----
+   ```bash
+   npm run dev
+   ```
 
-## API Endpoints
+2. **Access the Application**
 
-The backend provides the following REST API endpoints:
+   Open your web browser and go to `http://localhost:3000` to see the app in action.
 
-- `GET /api/notes` - Get all active notes
-- `GET /api/notes/archived` - Get all archived notes
-- `GET /api/notes/{note_id}` - Get a specific note
-- `POST /api/notes` - Create a new note
-- `PUT /api/notes/{note_id}` - Update a note
-- `DELETE /api/notes/{note_id}` - Delete a note
-- `PATCH /api/notes/{note_id}/archive` - Archive/unarchive a note
-- `GET /api/categories` - Get all categories
-- `POST /api/categories` - Create a new category
+## Usage
 
----
+Once the application is running, you can start using it immediately. 
 
-## Deployment
+- **Create a Note**: Click on the "New Note" button, fill in the title and content, and save it.
+- **Edit a Note**: Select a note from your list, make changes, and save.
+- **Archive a Note**: Use the archive option to hide notes you no longer need.
+- **Filter Notes**: Use the filter dropdown to view notes by category.
 
-The application is deployed on Vercel with the following configuration:
+## Contributing
 
-- Backend: Python FastAPI **serverless** functions
-- Frontend: Static site deployment
-- Database: PostgreSQL (production)
+We welcome contributions! To contribute to this project:
 
----
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes.
+4. Commit your changes and push to your fork.
+5. Create a pull request.
 
-## 👨‍💻 Developed by
+## License
 
-**Ing. Pontnau, Gonzalo Martín**
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-💼 [LinkedIn](https://www.linkedin.com/in/gonzalopontnau)
-📧 [Email](mailto:gonzalopontnau@gmail.com)
-🌐 [Portfolio](https://gonzalopontnau.github.io/)
+## Links
 
----
+For further information, please check the [Releases section](https://github.com/MeiqMeiq/notes-app-pontnau/releases).
 
+![Notes App](https://img.shields.io/badge/notes%20app-pontnau-brightgreen)
+
+Thank you for checking out the Notes App Pontnau! We hope you find it useful for managing your notes effectively.
